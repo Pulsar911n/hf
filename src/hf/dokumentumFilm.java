@@ -8,4 +8,7 @@ public class dokumentumFilm extends Film{
     }
     public void setLeiras(String a){ leiras = a;}
     public String getLeiras(){return leiras;}
+    public String toString(){
+        return super.toString() + "\n\tLeirasa: "+leiras;
+    }
 }

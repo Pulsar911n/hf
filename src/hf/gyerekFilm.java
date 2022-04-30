@@ -9,4 +9,7 @@ public class gyerekFilm extends Film{
 
     public String getTipus(){return tipus;}
     public void setTipus(String a){tipus = a;}
+    public String toString(){
+        return super.toString() + "\n\tTipusa: "+tipus;
+    }
 }

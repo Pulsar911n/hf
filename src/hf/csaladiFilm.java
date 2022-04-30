@@ -8,4 +8,7 @@ public class csaladiFilm extends Film{
     }
     public int getKorhatár(){return korhatar;}
     public void setKorhatár(int a){korhatar = a;}
+    public String toString(){
+        return super.toString() + "\n\tKorhatar: "+korhatar;
+    }
 }

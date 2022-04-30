@@ -17,4 +17,8 @@ public class Film {
     public int getKiadasEve(){return kiadasEve;}
     public int getHosszPercben(){return hosszPercben;}
     public String getKategoria(){return kategoria;}
+
+    public String toString(){
+        return "\tCime: "+cim+"\n\tKiadas eve: "+kiadasEve+"\n\tHossza: "+ hosszPercben + "\n\tKategoriaja: "+kategoria;
+    }
 }

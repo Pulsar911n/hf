@@ -1,0 +1,4 @@
+Aladdin;2001;130;csaladi
+Barka;2021;120;dokumentum
+Tesok;2011;100;gyerek
+Filmek;2000;140;csaladi
