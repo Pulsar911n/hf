@@ -1,12 +1,9 @@
 package hf;
-import java.sql.Time;
 import  java.util.ArrayList;
 import java.io.File;
-import java.util.Arrays;
 import java.util.Collections;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 import java.io.IOException;
 import java.io.FileWriter;
 public class Main {
@@ -33,9 +30,9 @@ public class Main {
             for (Film i: filmek){
                 f1.write(i.toString()+"\n"+""+"\n");
                 System.out.println("\tSikeresen beirtuk a(z) -" + i.getCim() + "- filmet!");
-                //i.getCim()+";"+i.getKiadasEve()+";"+i.getHosszPercben()+";"+i.getKategoria()+"\n"
             }
             f1.close();
+            System.err.println("FONTOS: ebből a fájlból nem lehet visszaolvasni a fájlokat!");
         }catch (IOException e){
             System.err.println("\tHiba a fájl elérésekor." + e);
         }
@@ -109,9 +106,9 @@ public class Main {
     }
     public static void startMenu(){
         System.out.println("\t\t $ Filmadatbázis $");
-        System.out.println(" ** A különböző parancsokat a nevük utáni számokat begépelve érhetjük el **\n ** Az 1-es választás után vesszővel elválasztva meghadhatja, hogy mi alapján szeretné rendezni a listát(cim, kiadas eve, hossz, kategoria) **\n ** Ha üresen hagyja nem lesz rendezve **");
+        System.out.println(" ** A különböző parancsokat a nevük utáni számokat begépelve érhetjük el **\n ** Az 1-es választás után vesszővel elválasztva, szóköz nélkül meghadhatja, hogy mi alapján szeretné rendezni a listát(cim, kiadas_eve, hossz, kategoria) **\n ** Ha üresen hagyja nem lesz rendezve **");
         while (true) {
-            System.out.println(" -- Opciók:\n\t × Filmek megtekintése(1)\n\t × Film hozzáadása(2)\n\t × Adatok kiirása fájlba(3)\n\t × Kilépés(4)");
+            System.out.println(" -- Opciók:\n\t × Filmek megtekintése(1)\n\t × Film hozzáadása(2)\n\t × Adatok kiirása fájlba(3)\n\t × Keresés és törlés(4)\n\t × Kilépés(5)");
             Scanner s1 = new Scanner(System.in);
             String[] alapValasztas = s1.nextLine().split(",");
             if (alapValasztas[0].equals("1")) {
@@ -123,7 +120,7 @@ public class Main {
                         Collections.sort(filmek, new cimCompare());
                         listaz.kilistaz(filmek);
                     }
-                    if (alapValasztas[1].equals("kiadas eve")){
+                    if (alapValasztas[1].equals("kiadas_eve")){
                         Collections.sort(filmek, new evCompare());
                         listaz.kilistaz(filmek);
                     }
@@ -169,7 +166,106 @@ public class Main {
                 }
 
             }
-            if (alapValasztas[0].equals("4")) {
+            if (alapValasztas[0].equals("4")){
+                System.out.print("Adja meg hogy milyen adatot keres!\n**Először irja be a tipust(cim, hossz, kategoria vagy kiadas_eve), majd vesszővel elválasztva, szóköz nélkül a tipuson belüli konkrét adatot**\n:");
+                Scanner s2 = new Scanner(System.in);
+                String[] keresettAdat = s1.nextLine().split(",");
+                if (keresettAdat[0].equals("cim")){
+                    int megvan  = 0;
+                    for (Film i : filmek){
+                        if (i.getCim().equals(keresettAdat[1])){
+                            System.out.print(keresettAdat[1]+" megtalálva, ki szeretné törölni? (igen/nem)\n:");
+                            Scanner s3 = new Scanner(System.in);
+                            String valasz = s3.nextLine();
+                            if (valasz.equals("igen")){
+                                filmek.remove(i);
+                                megvan = 1;
+                                break;
+                            }
+                            else if (valasz.equals("nem")){
+                                megvan = 1;
+                                break;
+                            }
+
+                        }
+                    }
+                    if(megvan == 0){
+                        System.out.println("Nincs benne a keresett adat.");
+                    }
+                }
+                if (keresettAdat[0].equals("hossz")){
+                    int megvan1  = 0;
+                    for (Film i : filmek){
+                        if (i.getHosszPercben() == Integer.parseInt(keresettAdat[1])){
+                            System.out.print(keresettAdat[1]+" megtalálva, ki szeretné törölni? (igen/nem)\n:");
+                            Scanner s3 = new Scanner(System.in);
+                            String valasz = s3.nextLine();
+                            if (valasz.equals("igen")){
+                                filmek.remove(i);
+                                megvan1 = 1;
+                                break;
+                            }
+                            else if (valasz.equals("nem")){
+                                megvan1 = 1;
+                               break;
+                            }
+
+                        }
+                    }
+                    if(megvan1 == 0){
+                        System.out.println("Nincs benne a keresett adat.");
+                    }
+                }
+                if (keresettAdat[0].equals("kategoria")){
+                    int megvan2 = 0;
+                    for (Film i : filmek){
+                        if (i.getKategoria().equals(keresettAdat[1])){
+                            System.out.print(keresettAdat[1]+" megtalálva, ki szeretné törölni? (igen/nem)\n:");
+                            Scanner s3 = new Scanner(System.in);
+                            String valasz = s3.nextLine();
+                            if (valasz.equals("igen")){
+                                filmek.remove(i);
+                                megvan2 = 1;
+                                break;
+                            }
+                            else if (valasz.equals("nem")){
+                                megvan2 = 1;
+                                break;
+                            }
+
+                        }
+                    }
+                    if(megvan2 == 0){
+                        System.out.println("Nincs benne a keresett adat.");
+                    }
+                }
+                if (keresettAdat[0].equals("kiadas_eve")){
+                    int megvan3  = 0;
+                    for (Film i : filmek){
+                        if (i.getKiadasEve() == Integer.parseInt(keresettAdat[1])){
+                            System.out.print(keresettAdat[1]+" megtalálva, ki szeretné törölni? (igen/nem)\n:");
+                            Scanner s3 = new Scanner(System.in);
+                            String valasz = s3.nextLine();
+                            if (valasz.equals("igen")){
+                                filmek.remove(i);
+                                megvan3 = 1;
+                                break;
+                            }
+                            else if (valasz.equals("nem")){
+                                megvan3 = 1;
+                                break;
+                            }
+
+                        }
+                    }
+                    if(megvan3 == 0){
+                        System.out.println("Nincs benne a keresett adat.");
+                    }
+                }
+
+
+            }
+            if (alapValasztas[0].equals("5")) {
                 break;
             }
         }
